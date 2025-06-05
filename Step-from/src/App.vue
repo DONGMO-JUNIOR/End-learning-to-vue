@@ -1,4 +1,53 @@
+<!-- <template>
+  <div id="app">
+    <router-view />
+  </div>
+</template>
+
+<script setup lang="ts">
+</script>
+
+<style>
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#app {
+  min-height: 100vh;
+}
+</style> -->
+
+<script setup lang="ts">
+import NavigationBar from '@/components/NavigationBar.vue'
+</script>
+
 <template>
+  <div id="app">
+    <!-- Navigation fixe pour toute l'application -->
+    <NavigationBar />
+    
+    <!-- Contenu de la page qui change selon la route -->
+    <main class="pt-20">
+      <router-view />
+    </main>
+  </div>
+</template>
+
+<style scoped>
+#app {
+  min-height: 100vh;
+}
+
+/* Assurer que le contenu ne passe pas sous la navigation fixe */
+main {
+  padding-top: 5rem; /* 80px - ajustez selon la hauteur de votre nav */
+}
+</style>
+
+<!-- <template>
  <div id="app">
     <header class="app-header">
       <h1>{{ appTitle }}</h1>
@@ -62,7 +111,7 @@ const appTitle: string = "Formulaire d'Inscription";
   font-size: 0.75rem;
   text-align: center;
 }
-</style>
+</style> -->
 
 
 
@@ -70,8 +119,8 @@ const appTitle: string = "Formulaire d'Inscription";
 
 
 
-
-<!-- <template>
+<!-- 
+<template>
   <div class="min-h-screen bg-white text-center flex flex-col justify-between">
     Header 
     <header class="flex justify-between items-center p-6 border-b">
