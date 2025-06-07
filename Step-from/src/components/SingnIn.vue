@@ -1,30 +1,35 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import CheckboxInput from '@/components/ui/CheckboxInput.vue'
+import SubmitButton from '@/components/ui/SubmitButton.vue'
+import TextInput from '@/components/ui/TextInput.vue'
 
 const router = useRouter()
+const rememberMe = ref(false)
 
-const email = ref('')
-const password = ref('')
+const formData = ref({
+  email: '',
+  password: ''
+})
 
 const handleSignIn = async () => {
   try {
-    console.log('Sign in attempt:', { email: email.value, password: password.value })
-    // Simuler une connexion réussie
+    console.log('Sign in attempt:', { ...formData.value, rememberMe: rememberMe.value })
     await new Promise(resolve => setTimeout(resolve, 1000))
     router.push('/')
   } catch (error) {
     console.error('Login failed:', error)
   }
 }
-const goToSignUp = () => {
-  router.push('/signup')
-}
+
+const goToSignUp = () => router.push('/signup')
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
+      <!-- Logo et titre (peut aussi devenir un composant) -->
       <div>
         <div class="flex justify-center">
           <div class="w-16 h-16 bg-gradient-to-r from-blue-900 to-purple-600 rounded-lg flex items-center justify-center">
@@ -47,46 +52,31 @@ const goToSignUp = () => {
       
       <form class="mt-8 space-y-6" @submit.prevent="handleSignIn">
         <div class="space-y-4">
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
-              Adresse email
-            </label>
-            <input
-              id="email"
-              v-model="email"
-              type="email"
-              required
-              class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Entrez votre email"
-            />
-          </div>
+          <TextInput
+            id="signin-email"
+            v-model="formData.email"
+            label="Adresse email"
+            type="email"
+            required
+            placeholder="Entrez votre email"
+          />
           
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">
-              Mot de passe
-            </label>
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              required
-              class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-              placeholder="Entrez votre mot de passe"
-            />
-          </div>
+          <TextInput
+          id="signin-password"
+            v-model="formData.password"
+            label="Mot de passe"
+            type="password"
+            required
+            placeholder="Entrez votre mot de passe"
+          />
         </div>
 
         <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <input
-              id="remember-me"
-              type="checkbox"
-              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label for="remember-me" class="ml-2 block text-sm text-gray-900">
-              Se souvenir de moi
-            </label>
-          </div>
+          <CheckboxInput
+            v-model="rememberMe"
+            id="remember-me"
+            label="Se souvenir de moi"
+          />
 
           <div class="text-sm">
             <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
@@ -95,14 +85,9 @@ const goToSignUp = () => {
           </div>
         </div>
 
-        <div>
-          <button
-            type="submit"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
-          >
-            Se connecter
-          </button>
-        </div>
+        <SubmitButton>
+          Se connecter
+        </SubmitButton>
       </form>
     </div>
   </div>

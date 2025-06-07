@@ -1,21 +1,32 @@
+
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const emit = defineEmits(['scroll-down'])
+
+const handleScrollDown = () => {
+   emit('scroll-down')
+}
+
 </script>
 
 <template>
   <section class="bg-gray-50 py-16 px-6">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center">
       <div class="md:w-1/2 mb-8 md:mb-0">
-        <h1 class="text-4xl md:text-5xl font-bold  italic text-blue-900 mb-4">
-          learn, Play and grow.
+        <h1 class="text-4xl md:text-5xl font-bold italic text-blue-900 mb-4">
+          {{ t('hero.title') }}
         </h1>
-        <p class="text-xl text-white-600 italic mb-8">
-          Creative kid's world where imagination meets education.
+        <p class="text-xl text-gray-600 italic mb-8">
+          {{ t('hero.subtitle') }}
         </p>
         <RouterLink
-        to="/signup"
-        class="px-8 py-3 italic bg-blue-500 text-white rounded-full hover:bg-blue-700 transition-colors duration-200 text-lg font-semibold">
-          Continue to Explore
-       </RouterLink> 
+          to="/signup"
+          class="px-8 py-3 italic bg-blue-500 text-white rounded-full hover:bg-blue-700 transition-colors duration-200 text-lg font-semibold"
+        >
+          {{ t('hero.cta') }}
+        </RouterLink> 
       </div>
       
       <div class="md:w-1/2 flex justify-center">
@@ -37,6 +48,14 @@
         <path d="M512.867,382.632a6.246,6.246,0,1,0,0,12.493H602.24a6.246,6.246,0,1,0,0-12.493Z" transform="translate(680.848 135.424)" fill="#e6e6e6"/><path d="M512.867,408.632a6.247,6.247,0,1,0,0,12.493H602.24a6.246,6.246,0,1,0,0-12.493Z" transform="translate(680.848 134.41)" fill="#e6e6e6"/>
         <path d="M512.867,434.632a6.247,6.247,0,1,0,0,12.493H602.24a6.246,6.246,0,1,0,0-12.493Z" transform="translate(680.848 133.527)" fill="#e6e6e6"/><path d="M215.494,314.132a6.246,6.246,0,0,0,0,12.493H322.165a6.246,6.246,0,1,0,0-12.493Z" transform="translate(692.445 138.096)" fill="#e6e6e6"/><path d="M215.494,231.132a6.246,6.246,0,0,0,0,12.493H322.165a6.246,6.246,0,1,0,0-12.493Z" transform="translate(692.445 129.107)" fill="#6c63ff"/><path d="M344.984,316.456a.48.48,0,0,0-.416.721l4.079,7.064a.481.481,0,0,0,.832,0l4.079-7.064a.48.48,0,0,0-.416-.721Z" transform="translate(687.17 138.006)" fill="#6c63ff"/><path d="M474.494,314.132a6.246,6.246,0,0,0,0,12.493H581.165a6.246,6.246,0,0,0,0-12.493Z" transform="translate(682.344 138.096)" fill="#e6e6e6"/><path d="M603.984,316.456a.48.48,0,0,0-.416.721l4.079,7.064a.481.481,0,0,0,.833,0l4.078-7.064a.48.48,0,0,0-.416-.721Z" transform="translate(677.068 138.006)" fill="#6c63ff"/><ellipse cx="3.844" cy="3.844" rx="3.844" ry="3.844" transform="translate(1153.354 545.445)" fill="#6c63ff"/><ellipse cx="3.844" cy="3.844" rx="3.844" ry="3.844" transform="translate(903.975 570.562)" fill="#6c63ff"/><path d="M960.05,733.1H742.512a.809.809,0,0,1,0-1.617H960.05a.809.809,0,0,1,0,1.617Z" transform="translate(-181.703 36.347)" fill="#f2f2f2"/><path d="M621.343,540.04H511.789a8.178,8.178,0,0,1-8.168-8.169V521.3a8.178,8.178,0,0,1,8.168-8.168H621.343a8.178,8.178,0,0,1,8.168,8.168v10.571A8.178,8.178,0,0,1,621.343,540.04Z" transform="matrix(0.819, -0.574, 0.574, 0.819, -8.102, 470.589)" fill="#6c63ff"/></g></svg>
       </div>
+       <button 
+        @click="handleScrollDown"
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+      >
+        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </button>
     </div>
     
    

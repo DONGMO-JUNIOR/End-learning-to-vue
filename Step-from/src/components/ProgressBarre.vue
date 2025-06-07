@@ -1,37 +1,42 @@
 <template>
-  <div class="progress-container">
-    <div class="steps-indicator">
+  <div class="p-4 sm:p-6 bg-slate-50 border-b border-gray-200">
+    <!-- Indicateurs de progression -->
+    <div class="flex justify-between mb-3 relative">
       <div
         v-for="step in totalSteps"
         :key="step"
         :class="[
-          'step-circle',
+          'w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs transition-all duration-300 relative z-10',
           {
-            'active': currentStep === step,
-            'completed': currentStep > step,
-            'pending': currentStep < step
+            'bg-blue-500 text-white border-2 border-blue-500 shadow-lg shadow-blue-500/25': currentStep === step,
+            'bg-green-500 text-white border-2 border-green-500': currentStep > step,
+            'bg-gray-200 text-gray-500 border-2 border-gray-300': currentStep < step
           }
         ]"
       >
-        <span v-if="currentStep > step">✓</span>
-        <span v-else>{{ step }}</span>
+        <span v-if="currentStep > step" class="text-xs">✓</span>
+        <span v-else class="text-xs">{{ step }}</span>
       </div>
     </div>
     
-    <div class="progress-bar">
+    <!-- Barre de progression -->
+    <div class="h-1 bg-gray-200 rounded-full mb-3 overflow-hidden">
       <div 
-        class="progress-fill"
+        class="h-full bg-blue-500 transition-all duration-500 ease-out rounded-full"
         :style="{ width: `${(currentStep / totalSteps) * 100}%` }"
       ></div>
     </div>
     
-    <div class="step-labels">
+    <!-- Labels des étapes -->
+    <div class="flex justify-between">
       <span 
         v-for="(label, index) in stepLabels"
         :key="index"
         :class="[
-          'step-label',
-          { 'active': currentStep === index + 1 }
+          'text-xs text-center flex-1 transition-colors duration-300',
+          currentStep === index + 1 
+            ? 'text-blue-500 font-semibold' 
+            : 'text-gray-500'
         ]"
       >
         {{ label }}
@@ -50,84 +55,3 @@ interface Props {
 
 defineProps<Props>();
 </script>
-
-<style scoped>
-.progress-container {
-  padding: 2rem;
-  background-color: #f8fafc;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.steps-indicator {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.step-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 2;
-}
-
-.step-circle.pending {
-  background-color: #e5e7eb;
-  color: #6b7280;
-  border: 2px solid #d1d5db;
-}
-
-.step-circle.active {
-  background-color: #3b82f6;
-  color: white;
-  border: 2px solid #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-}
-
-.step-circle.completed {
-  background-color: #10b981;
-  color: white;
-  border: 2px solid #10b981;
-}
-
-.progress-bar {
-  height: 4px;
-  background-color: #e5e7eb;
-  border-radius: 2px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #3b82f6;
-  transition: width 0.5s ease;
-  border-radius: 2px;
-}
-
-.step-labels {
-  display: flex;
-  justify-content: space-between;
-}
-
-.step-label {
-  font-size: 12px;
-  color: #6b7280;
-  text-align: center;
-  flex: 1;
-  transition: color 0.3s ease;
-}
-
-.step-label.active {
-  color: #3b82f6;
-  font-weight: 600;
-}
-</style>

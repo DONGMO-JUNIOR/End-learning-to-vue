@@ -1,0 +1,28 @@
+{
+  "common": {
+    "next": "Suivant",
+    "cancel": "Annuler",
+    "explore": "Continuer à Explorer",
+    "language": "Langue"
+  },
+  "home": {
+    "logOut": {
+      "logIn": "Connexion",
+      "register": "S'inscrire"
+    },
+    "logIn": {
+      "welcome": "Bienvenue !"
+    }
+  },
+  "hero": {
+    "title": "apprendre, Jouer et grandir.",
+    "subtitle": "Le monde créatif des enfants où l'imagination rencontre l'éducation.",
+    "cta": "Continuer à Explorer"
+  },
+ "navigation": {
+  "Home": "Accueil",
+  "About Us": "À propos",
+  "Program": "Programme",
+  "Contact Us": "Nous contacter"
+}
+}

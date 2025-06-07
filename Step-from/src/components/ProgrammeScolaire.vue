@@ -23,14 +23,12 @@ import { ref } from 'vue';
 import type { Cours } from '@/types/Cours';
 
 const programme = ref<Cours[]>([
-  { id: 1, jour: 'Lundi', matiere: 'Mathématiques', professeur: 'M. Dupont', horaire: '08h00 - 10h00' },
-  { id: 2, jour: 'Mardi', matiere: 'Français', professeur: 'Mme Martin', horaire: '09h00 - 11h00' },
+  { id: 1, jour: 'Lundi', matiere: 'Mathématiques', professeur: 'M. DONGMO', horaire: '08h00 - 10h00' },
+  { id: 2, jour: 'Mardi', matiere: 'Informatique', professeur: 'Mme Martin', horaire: '09h00 - 11h00' },
   { id: 3, jour: 'Mercredi', matiere: 'Histoire-Géographie', professeur: 'M. Bernard', horaire: '10h00 - 12h00' },
   { id: 4, jour: 'Jeudi', matiere: 'Sciences', professeur: 'Mme Leroy', horaire: '08h30 - 10h30' },
   { id: 5, jour: 'Vendredi', matiere: 'Anglais', professeur: 'Mr Smith', horaire: '09h00 - 11h00' },
 { id: 6, jour: 'Samedi', matiere: 'Anglais', professeur: 'Mr Smith', horaire: '09h00 - 11h00' },
   { id: 7, jour: 'Dimanche', matiere: 'Sport', professeur: 'Mr BIL', horaire: '09h00 - 11h00' },
-
-  // Vous pouvez ajouter d'autres cours ici
 ]);
 </script>

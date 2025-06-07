@@ -4,7 +4,7 @@ import AboutSection from '@/components/AboutSection.vue'
 import MultiStep from '@/components/MultiStep.vue'
 import ProgrammeScolaire from '@/components/ProgrammeScolaire.vue'
 import SingnIn from '@/components/SingnIn.vue'
-import ContactForm from '@/components/ContactForm.vue'
+import ContactForm from '@/components/forms/ContactForm.vue'
 
 const routes = [
   {
@@ -39,14 +39,6 @@ const routes = [
     name: 'SingUp',
     component: MultiStep,
   },
-//   {
-//     path: '/register',
-//     name: 'Register',
-//     component: () => import('../views/RegisterPage.vue'),
-//     meta: {
-//       title: 'Inscription - KIDERO'
-//     }
-//   }
 ]
 
 const router = createRouter({

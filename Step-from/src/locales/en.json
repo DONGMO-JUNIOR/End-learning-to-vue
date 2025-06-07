@@ -1,0 +1,29 @@
+{
+  "common": {
+    "next": "Next",
+    "cancel": "Cancel",
+    "explore": "Continue to Explore",
+    "language": "Language"
+  },
+  "home": {
+    "logOut": {
+      "logIn": "Log in",
+      "register": "Register"
+    },
+    "logIn": {
+      "welcome": "Welcome!"
+    }
+  },
+  "hero": {
+    "title": "learn, Play and grow.",
+    "subtitle": "Creative kid's world where imagination meets education.",
+    "cta": "Continue to Explore"
+  },
+  
+"navigation": {
+  "Home": "Home",
+  "About Us": "About Us",
+  "Program": "Program",
+  "Contact Us": "Contact Us"
+}
+}

@@ -1,28 +1,60 @@
+<!-- components/StepTwo.vue -->
 <template>
-  <div class="box">
-    <div class="step-box">
-      <h2>Étape 2 : Informations du Parent</h2>
-      <form @submit.prevent="submitForm" class="form-grid">
-        <label>
-          Email:
-          <input v-model="form.email" type="email" required />
-        </label>
-        <label>
-          Téléphone:
-          <input v-model="form.telephone" required />
-        </label>
-        <div class="button-group">
-          <button type="button" @click="emit('prevStep')">⬅️ Précédent</button>
-          <button type="submit">Suivant ➡️</button>
+    <div class="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl border border-gray-200 border-l-4 border-l-blue-500 rounded-lg bg-gradient-to-br from-white to-blue-50 shadow-sm p-4 sm:p-6 transition-shadow duration-300 hover:shadow-md">
+      <h2 class="mt-0 text-lg sm:text-xl font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-4 sm:mb-6">
+        Étape 2 : Informations du Parent
+      </h2>
+      
+      <form @submit.prevent="submitForm" class="flex flex-col gap-4">
+
+        <TextInput
+          id="nom"
+          label="Nom Parent"
+          placeholder="Entrez le nom du parent"
+        modelValue="form.nom"
+          :required="true"
+        />
+
+        <TextInput
+          id="email"
+          label="Email"
+          type="email"
+          placeholder="exemple@email.com"
+          v-model="form.email"
+          :required="true"
+        />
+        
+        <PhoneInput
+          id="telephone"
+          label="Téléphone"
+          placeholder="Ex: +237 6XX XXX XXX"
+          v-model="form.telephone"
+          :required="true"
+        />
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-4 sm:mt-6">
+          <SubmitButton
+            text="⬅️ Précédent"
+            type="button"
+            @click="emit('prevStep')"
+            class="w-full sm:w-auto min-w-[120px] bg-gray-500 hover:bg-gray-600 focus:ring-gray-500"
+          />
+          <SubmitButton
+            text="Suivant ➡️"
+            type="submit"
+            class="w-full sm:w-auto min-w-[120px]"
+          />
         </div>
       </form>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import type { ParentInfo } from '../types/Form'
+import type { ParentInfo } from '../types/Form';
+import TextInput from '../components/ui/TextInput.vue'
+import PhoneInput from '../components/ui/PhoneInput.vue';
+import SubmitButton from '../components/ui/SubmitButton.vue';
 
 // Props
 interface Props {
@@ -50,84 +82,3 @@ const submitForm = (): void => {
   emit('nextStep', { ...form });
 };
 </script>
-
-<style scoped>
-.box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  background-color: #f3f4f6;
-}
-
-.step-box {
-  width: 100%;
-  max-width: 500px;
-  border: 1px solid #e0e0e0;
-  border-left: 4px solid #3b82f6;
-  border-radius: 8px;
-  background: linear-gradient(to bottom right, #ffffff, #f7fafd);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
-  transition: box-shadow 0.3s ease;
-}
-
-.step-box h2 {
-  margin-top: 0;
-  font-size: 1.25rem;
-  color: #1f2937;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.form-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 500;
-  color: #374151;
-}
-
-input {
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.button-group button {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
-  min-width: 100px;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.button-group button:hover {
-  background-color: #2563eb;
-}
-</style>
