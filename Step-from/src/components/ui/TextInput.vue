@@ -1,17 +1,24 @@
 <template>
-  <div>
-    <label :for="id" class="block text-sm font-medium text-gray-700">
+  <div class="mb-4">
+    <label :for="id" class="block text-sm font-medium text-gray-700 mb-1">
       {{ label }}
+      <span v-if="required" class="text-red-500">*</span>
     </label>
     <input
       :id="id"
       :type="type"
       :placeholder="placeholder"
-      :value="modelValue"
+      :value="modelValue "
       :required="required"
       :disabled="disabled"
       @input="handleInput"
-      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 p-2 border"
+      @blur="handleBlur"
+      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border transition duration-150 ease-in-out"
+       v-bind="$attrs"
+      :class="{
+        'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500': error,
+        'bg-gray-100 cursor-not-allowed': disabled
+      }"
     />
     <p v-if="error" class="mt-1 text-sm text-red-600">{{ error }}</p>
   </div>
@@ -21,12 +28,13 @@
 interface Props {
   id: string
   label: string
-  type?: 'text' | 'email' | 'password' | 'tel' // Limité aux types utiles
+  type?: 'text' | 'email' | 'password' | 'tel' | 'number'
   placeholder?: string
-  modelValue: string
+  modelValue: string | number
   required?: boolean
   disabled?: boolean
-  error?: string // Nouvelle prop pour la gestion d'erreurs
+  error?: string
+  
 }
 
 withDefaults(defineProps<Props>(), {
@@ -36,10 +44,15 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string]
+  (e: 'update:modelValue', value: string | number): void
+  (e: 'blur', event: Event): void
 }>()
 
 const handleInput = (e: Event) => {
-  emit('update:modelValue', (e.target as HTMLInputElement).value)
+  const target = e.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
+const handleBlur = (e: Event) => {
+  emit('blur', e) 
 }
 </script>

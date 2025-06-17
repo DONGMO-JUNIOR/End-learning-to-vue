@@ -46,8 +46,9 @@ const scrollToSection = (sectionId: string) => {
   scroll-snap-type: y mandatory;
   height: 100vh;
   overflow-y: scroll;
+   scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
 }
-
 .snap-section {
   scroll-snap-align: start;
   height: 100vh;

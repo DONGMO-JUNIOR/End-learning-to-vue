@@ -5,22 +5,31 @@
         Étape 1 : Informations de l'enfant
       </h2>
       
-      <form @submit.prevent="submitForm" class="flex flex-col gap-4">
+      <Form @submit="submitForm" :validation-schema="schema" class="flex flex-col gap-4">
+        <Field name="nom" v-slot="{ field, errorMessage }">
         <TextInput
           id="nom"
           label="Nom"
           placeholder="Entrez le nom de l'enfant"
-          v-model="form.nom"
+          :model-value="field.value || ''"
+          @update:model-value="field.onChange"
+          @blur="field.onBlur"
           :required="true"
+          :error="errorMessage"
         />
-        
+        </Field>
+        <Field name="prenom" v-slot="{ field, errorMessage }">
         <TextInput
           id="prenom"
           label="Prénom"
           placeholder="Entrez le prénom de l'enfant"
-          v-model="form.prenom"
+          :model-value="field.value || ''"
+          @update:model-value="field.onChange"
+          @blur="field.onBlur"
           :required="true"
+          :error="errorMessage"
         />
+        </Field>
         
         <div class="mt-4 sm:mt-6">
           <SubmitButton
@@ -29,15 +38,20 @@
             class="w-full sm:w-auto sm:mx-auto sm:block"
           />
         </div>
-      </form>
+      </Form>
     </div>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import { Form, Field } from 'vee-validate'
+import * as yup from 'yup'
 import type { ChildInfo } from '../types/Form';
 import TextInput from '../components/ui/TextInput.vue';
 import SubmitButton from '../components/ui/SubmitButton.vue';
+
+
+
 
 // Props
 interface Props {
@@ -58,9 +72,20 @@ const form = reactive<ChildInfo>({
   nom: props.initialData.nom,
   prenom: props.initialData.prenom
 });
+const schema = yup.object({
+  nom: yup.string()
+  .trim()
+  .required('Le nom est requis')
+  .min(4, 'Au moins 4 caractères'),
+  prenom: yup.string()
+  .trim()
+  .required('Le prénom est requis')
+  .min(4, 'Au moins 4 caractères')
+})
 
 // Methods
-const submitForm = (): void => {
-  emit('nextStep', { ...form });
+const submitForm = (values : any)=> {
+  const childInfo = values as ChildInfo;
+  emit('nextStep', childInfo);
 };
 </script>

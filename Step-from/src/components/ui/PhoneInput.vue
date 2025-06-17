@@ -2,6 +2,8 @@
   <div>
     <label :for="id" class="block text-sm font-medium text-gray-700">
       {{ label }}
+    <span v-if="required" class="text-red-500">*</span>
+
     </label>
     <input
       :id="id"

@@ -24,14 +24,6 @@
           </div>
         </div>
       </div>
-       <button 
-      @click="handleScrollDown"
-      class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
-    >
-      <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-      </svg>
-    </button>
   </section>
 </template>
 
@@ -41,10 +33,6 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const emit = defineEmits(['scroll-down'])
-
-const handleScrollDown = () => {
-  emit('scroll-down')
-}
 
 // Types
 interface Stat {
