@@ -24,6 +24,7 @@
       <div 
         class="h-full bg-blue-500 transition-all duration-500 ease-out rounded-full"
         :style="{ width: `${(currentStep / totalSteps) * 100}%` }"
+        data-testid="progress-bar-fill"
       ></div>
     </div>
     
@@ -38,6 +39,9 @@
             ? 'text-blue-500 font-semibold' 
             : 'text-gray-500'
         ]"
+        :data-testid="`label-${index + 1}`"
+        :data-label-status="currentStep === index + 1 ? 'active' : 'inactive'"
+
       >
         {{ label }}
       </span>

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import TextInput from '@/components/ui/TextInput.vue' 
+import TextInput from '../ui/TextInput.vue' 
 
 describe('TextInput.vue', () => {
   it('affiche le label et le champ input', () => {

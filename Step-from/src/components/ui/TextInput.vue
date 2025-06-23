@@ -6,6 +6,7 @@
     </label>
     <input
       :id="id"
+      :name="name"
       :type="type"
       :placeholder="placeholder"
       :value="modelValue "
@@ -25,6 +26,8 @@
 </template>
 
 <script setup lang="ts">
+import { useField } from 'vee-validate'
+
 interface Props {
   id: string
   label: string
@@ -34,10 +37,11 @@ interface Props {
   required?: boolean
   disabled?: boolean
   error?: string
+  name: string,
   
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   type: 'text',
   required: false,
   disabled: false
@@ -55,4 +59,6 @@ const handleInput = (e: Event) => {
 const handleBlur = (e: Event) => {
   emit('blur', e) 
 }
+
+const { value } =  useField(props.name,{});
 </script>

@@ -25,5 +25,137 @@
   "About Us": "About Us",
   "Program": "Program",
   "Contact Us": "Contact Us"
-}
+},
+
+"about": {
+  "title": "About us",
+  "description": "We are dedicated to creating a creative and engaging learning environment for children, where they can explore, play, and grow in a world tailored to their needs.",
+  "stats": {
+    "happyChildren": "Happy Children",
+    "creativePrograms": "Creative Programs",
+    "yearsExperience": "Years of Experience"
+  }
+},
+"programme": {
+  "title": "Weekly Schedule",
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
+  "subjects": {
+    "math": "Mathematics",
+    "cs": "Computer Science",
+    "history": "History-Geography",
+    "science": "Science",
+    "english": "English"
+  },
+  "stats": {
+    "totalCourses": "Total Courses",
+    "daysPerWeek": "Days/Week",
+    "professors": "Professors",
+    "subjects": "Subjects"
+  }
+},
+
+  "contact": {
+    "title": "Contact Us",
+    "fields": {
+      "name": {
+        "label": "Full Name",
+        "placeholder": "Your full name",
+        "errors": {
+          "required": "Name is required",
+          "min": "Too short (minimum 2 characters)",
+          "max": "Too long (maximum 50 characters)"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "example@domain.com",
+        "errors": {
+          "required": "Email is required",
+          "invalid": "Invalid email format"
+        }
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "6XX XXX XXX",
+        "errors": {
+          "required": "Phone is required",
+          "invalid": "Invalid format. Use: 237XXXXXXXXX or 6XXXXXXXX"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Your message here...",
+        "errors": {
+          "required": "Message is required",
+          "min": "Too short (minimum 10 characters)",
+          "max": "Too long (maximum 500 characters)"
+        }
+      }
+    },
+    "submit": "Send Message",
+    "success": "Message sent successfully! We'll contact you soon.",
+    "error": "An error occurred. Please try again.",
+    "validation": {
+      "title": "Validation state:",
+      "valid": "Form is valid:",
+      "errors": "Errors:"
+    }
+  },
+
+  "login": {
+    "title": "Sign in to your account",
+    "or": "Or",
+    "signup": "create a new account",
+    "forgot": "Forgot password?",
+    "submit": "Sign in",
+    "loading": "Signing in...",
+    "fields": {
+      "email": {
+        "label": "Email Address",
+        "placeholder": "Enter your email",
+        "errors": {
+          "required": "Email is required",
+          "invalid": "Invalid email format"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "errors": {
+          "required": "Password is required",
+          "pattern": "Password must be exactly 6 characters and include: 1 lowercase, 1 uppercase, 1 number & 1 special character (@$!%*?&)"
+        }
+      },
+      "remember": { "label": "Remember me" }
+    },
+    "errors": {
+      "notRegistered": "That email is not registered. Please check or sign up.",
+      "wrongPassword": "Incorrect password. Please try again."
+    }
+  },
+
+  "forgotPassword": {
+    "title": "Reset your password",
+    "subtitle": "Enter your email address to receive a reset link",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "Enter your email",
+    "sending": "Sending...",
+    "sendResetLink": "Send reset link",
+    "rememberPassword": "Remember your password?",
+    "login": "Log in",
+    "successMessage": "A reset link has been sent to {email}",
+    "errorMessage": "An error occurred. Please try again.",
+    "validation": {
+      "required": "Email is required",
+      "invalid": "Invalid email format"
+    }
+  }
+
 }

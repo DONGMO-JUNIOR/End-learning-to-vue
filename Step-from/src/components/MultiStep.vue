@@ -46,11 +46,6 @@ const formData = reactive<CompleteFormData>({
   childSpecs: { classe: '', serie: '' }
 });
 
-// Typage des composants d'étape
-interface StepComponent {
-  (data: any): void;
-}
-
 const stepsComponents: Record<1 | 2 | 3, ReturnType<typeof defineComponent>> = {
   1: StepOne,
   2: StepTwo,

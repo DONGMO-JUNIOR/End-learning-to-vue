@@ -24,5 +24,140 @@
   "About Us": "À propos",
   "Program": "Programme",
   "Contact Us": "Nous contacter"
-}
+},
+
+"about": {
+  "title": "À propos",
+  "description": "Nous sommes dédiés à créer un environnement d'apprentissage créatif et stimulant pour les enfants, où ils peuvent explorer, jouer et grandir dans un monde adapté à leurs besoins.",
+  "stats": {
+    "happyChildren": "Enfants heureux",
+    "creativePrograms": "Programmes créatifs",
+    "yearsExperience": "Années d'expérience"
+  }
+},
+
+"programme": {
+  "title": "Programme Hebdomadaire",
+  "days": {
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi"
+  },
+  "subjects": {
+    "math": "Mathématiques",
+    "cs": "Informatique",
+    "history": "Histoire-Géographie",
+    "science": "Sciences",
+    "english": "Anglais"
+  },
+  "stats": {
+    "totalCourses": "Cours total",
+    "daysPerWeek": "Jours/semaine",
+    "professors": "Professeurs",
+    "subjects": "Matières"
+  }
+},
+
+  "contact": {
+    "title": "Contactez-nous",
+    "fields": {
+      "name": {
+        "label": "Nom complet",
+        "placeholder": "Votre nom complet",
+        "errors": {
+          "required": "Le nom est obligatoire",
+          "min": "Trop court (minimum 2 caractères)",
+          "max": "Trop long (maximum 50 caractères)"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "exemple@domaine.com",
+        "errors": {
+          "required": "L'email est obligatoire",
+          "invalid": "Format d'email invalide"
+        }
+      },
+      "phone": {
+        "label": "Téléphone",
+        "placeholder": "6XX XXX XXX",
+        "errors": {
+          "required": "Le téléphone est obligatoire",
+          "invalid": "Format invalide. Utilisez: 237XXXXXXXXX ou 6XXXXXXXX"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Votre message ici...",
+        "errors": {
+          "required": "Le message est obligatoire",
+          "min": "Trop court (minimum 10 caractères)",
+          "max": "Trop long (maximum 500 caractères)"
+        }
+      }
+    },
+    "submit": "Envoyer le message",
+    "success": "Message envoyé avec succès ! Nous vous contacterons bientôt.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "validation": {
+      "title": "État de validation :",
+      "valid": "Formulaire valide :",
+      "errors": "Erreurs :"
+    }
+  },
+
+
+  "login": {
+    "title": "Connectez-vous à votre compte",
+    "or": "Ou",
+    "signup": "créez un nouveau compte",
+    "forgot": "Mot de passe oublié?",
+    "submit": "Se connecter",
+    "loading": "Connexion en cours...",
+    "fields": {
+      "email": {
+        "label": "Adresse email",
+        "placeholder": "Entrez votre email",
+        "errors": {
+          "required": "L'email est requis",
+          "invalid": "Format d'email invalide"
+        }
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Entrez votre mot de passe",
+        "errors": {
+          "required": "Le mot de passe est requis",
+          "pattern": "Le mot de passe doit faire exactement 6 caractères et contenir : 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial (@$!%*?&)"
+        }
+      },
+      "remember": { "label": "Se souvenir de moi" }
+    },
+    "errors": {
+      "notRegistered": "Cet email n'est pas enregistré. Veuillez vérifier ou créer un compte.",
+      "wrongPassword": "Mot de passe incorrect. Veuillez réessayer."
+    }
+  },
+  
+  "forgotPassword": {
+    "title": "Réinitialiser votre mot de passe",
+    "subtitle": "Entrez votre adresse email pour recevoir un lien de réinitialisation",
+    "emailLabel": "Adresse email",
+    "emailPlaceholder": "Entrez votre email",
+    "sending": "Envoi en cours...",
+    "sendResetLink": "Envoyer le lien de réinitialisation",
+    "rememberPassword": "Vous vous souvenez de votre mot de passe?",
+    "login": "Se connecter",
+    "successMessage": "Un lien de réinitialisation a été envoyé à {email}",
+    "errorMessage": "Une erreur s'est produite. Veuillez réessayer.",
+    "validation": {
+      "required": "L'email est obligatoire",
+      "invalid": "Format d'email invalide"
+    }
+  }
+
+
 }

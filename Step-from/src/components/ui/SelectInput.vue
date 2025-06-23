@@ -41,7 +41,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  required: false,
+  required: true,
   placeholder: 'Sélectionnez une option'
 })
 

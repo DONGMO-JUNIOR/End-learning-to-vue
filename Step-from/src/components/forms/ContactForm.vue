@@ -1,9 +1,8 @@
 <template>
   <div class="rounded-lg bg-gray-50 flex flex-col justify-center m-[60px] py-12 px-4 sm:px-6 lg:px-8 max-w-md mx-auto">
-    <h2 class="text-2xl font-bold mb-6 text-center">Contactez-nous</h2>
-    
+    <h2 class="text-2xl font-bold mb-6 text-center">{{ t('contact.title') }}</h2>
+
     <Form @submit="handleSubmit" v-slot="{ errors, meta }" class="space-y-4 max-w-md mx-auto">
-      
       <!-- Champ Nom -->
       <Field name="name" :rules="nameRules" v-slot="{ field, errorMessage }">
         <TextInput
@@ -11,14 +10,14 @@
           :modelValue="field.value || ''"
           @update:modelValue="field.onChange"
           @blur="field.onBlur"
-          label="Nom complet"
+          :label="t('contact.fields.name.label')"
           type="text"
-          placeholder="Votre nom complet"
+          :placeholder="t('contact.fields.name.placeholder')"
           :required="true"
           :error="errorMessage"
         />
       </Field>
-      
+
       <!-- Champ Email -->
       <Field name="email" :rules="emailRules" v-slot="{ field, errorMessage }">
         <TextInput
@@ -26,38 +25,36 @@
           :modelValue="field.value || ''"
           @update:modelValue="field.onChange"
           @blur="field.onBlur"
-          label="Email"
+          :label="t('contact.fields.email.label')"
           type="email"
-          placeholder="exemple@domaine.com"
+          :placeholder="t('contact.fields.email.placeholder')"
           :required="true"
           :error="errorMessage"
         />
       </Field>
-      
-      <!-- Champ Téléphone -->
-     <Field name="phone" :rules="phoneRules" v-slot="{ field, errorMessage }">
-       <PhoneInput
-  id="phone"
-  :modelValue="phoneDisplayValue"
-  @update:modelValue="(val) => {
-    const result = handlePhoneInput(val)
-    field.onChange(result) // VeeValidate reçoit la vraie valeur
-  }"
-  @blur="field.onBlur"
-  label="Téléphone"
-  placeholder="6XX XXX XXX"
-  :required="true"
-/>
 
+      <!-- Champ Téléphone -->
+      <Field name="phone" :rules="phoneRules" v-slot="{ field, errorMessage }">
+        <PhoneInput
+          id="phone"
+          :modelValue="phoneDisplayValue"
+          @update:modelValue="(val) => {
+            const result = handlePhoneInput(val)
+            field.onChange(result)
+          }"
+          @blur="field.onBlur"
+          :label="t('contact.fields.phone.label')"
+          :placeholder="t('contact.fields.phone.placeholder')"
+          :required="true"
+        />
         <p v-if="errorMessage" class="mt-1 text-sm text-red-600">{{ errorMessage }}</p>
       </Field>
-      
+
       <!-- Champ Message -->
       <Field name="message" :rules="messageRules" v-slot="{ field, errorMessage }">
         <div class="mb-4">
           <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
-            Message
-            <span class="text-red-500">*</span>
+            {{ t('contact.fields.message.label') }} <span class="text-red-500">*</span>
           </label>
           <textarea
             id="message"
@@ -67,12 +64,12 @@
             rows="4"
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
             :class="{ 'border-red-300': errorMessage }"
-            placeholder="Votre message ici..."
+            :placeholder="t('contact.fields.message.placeholder')"
           ></textarea>
           <p v-if="errorMessage" class="mt-1 text-sm text-red-600">{{ errorMessage }}</p>
         </div>
       </Field>
-      
+
       <!-- Bouton de soumission -->
       <div>
         <button
@@ -80,15 +77,15 @@
           :disabled="!meta.valid"
           class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed"
         >
-          Envoyer le message
+          {{ t('contact.submit') }}
         </button>
       </div>
 
       <!-- Debug Info (optionnel) -->
       <div v-if="debug" class="mt-6 p-4 bg-gray-100 rounded text-sm">
-        <h4 class="font-bold mb-2">État de validation :</h4>
-        <p>Formulaire valide : {{ meta.valid ? '✅' : '❌' }}</p>
-        <p>Erreurs : {{ errors }}</p>
+        <h4 class="font-bold mb-2">{{ t('contact.validation.title') }}</h4>
+        <p>{{ t('contact.validation.valid') }} {{ meta.valid ? '✅' : '❌' }}</p>
+        <p>{{ t('contact.validation.errors') }} {{ errors }}</p>
       </div>
     </Form>
   </div>
@@ -96,15 +93,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { Form, Field } from 'vee-validate'
 import * as yup from 'yup'
 import TextInput from '@/components/ui/TextInput.vue'
 import PhoneInput from '@/components/ui/PhoneInput.vue'
 
+const { t } = useI18n()
 const router = useRouter()
-const debug = ref(false) // Mettre à true pour le mode debug
+const debug = ref(false)
 const phoneDisplayValue = ref('')
+
 const handlePhoneInput = (value: string) => {
   const cleaned = value.replace(/\D/g, '')
   const fullNumber = cleaned.startsWith('237') ? cleaned : `237${cleaned}`
@@ -117,44 +117,35 @@ const handlePhoneInput = (value: string) => {
     phoneDisplayValue.value = value
   }
 
-  return fullNumber 
+  return fullNumber
 }
 
-// Règles de validation
 const nameRules = yup.string()
-  .required('Le nom est obligatoire')
-  .trim()
-  .min(2, 'Trop court (minimum 2 caractères)')
-  .max(50, 'Trop long (maximum 50 caractères)')
+  .required(t('contact.fields.name.errors.required'))
+  .min(2, t('contact.fields.name.errors.min'))
+  .max(50, t('contact.fields.name.errors.max'))
 
 const emailRules = yup.string()
-  .required('L\'email est obligatoire')
-  .trim()
-  .email('Format d\'email invalide')
+  .required(t('contact.fields.email.errors.required'))
+  .email(t('contact.fields.email.errors.invalid'))
 
 const phoneRules = yup.string()
-  .required('Le téléphone est obligatoire')
-  .trim()
-  .matches(/^237\d{9}$/, 'Numéro invalide (doit contenir 9 chiffres après 237)')
-
-
+  .required(t('contact.fields.phone.errors.required'))
+  .matches(/^(?:\+?237\s?)?6\d{8}$/, t('contact.fields.phone.errors.invalid'))
 
 const messageRules = yup.string()
-  .required('Le message est obligatoire')
-  .trim()
-  .min(10, 'Trop court (minimum 10 caractères)')
-  .max(500, 'Trop long (maximum 500 caractères)')
+  .required(t('contact.fields.message.errors.required'))
+  .min(10, t('contact.fields.message.errors.min'))
+  .max(500, t('contact.fields.message.errors.max'))
 
-// Soumission du formulaire
 const handleSubmit = async (values: any, { resetForm }: any) => {
   try {
-    console.log('Données du formulaire:', values)
-    
-    alert('Message envoyé avec succès! Nous vous contacterons bientôt.')
+    console.log('Form data:', values)
+    alert(t('contact.success'))
     resetForm()
   } catch (error) {
-    console.error('Erreur lors de l\'envoi:', error)
-    alert('Une erreur est survenue. Veuillez réessayer.')
+    console.error('Error:', error)
+    alert(t('contact.error'))
   }
 }
 </script>

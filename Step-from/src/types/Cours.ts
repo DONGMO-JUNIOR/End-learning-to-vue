@@ -1,7 +1,7 @@
  export interface Cours {
   id: number;
-  jour: string;
-  matiere: string;
+  dayKey: string;
+  subjectKey: string;
   professeur: string;
   horaire: string;
 }
