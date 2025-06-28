@@ -16,31 +16,30 @@ const navigationItems = ref([
 
 ])
 
-// Fonction pour naviguer vers une page
 const navigateTo = (path: string): void => {
   router.push(path)
 }
 
-// Fonction pour mettre à jour l'élément actif basé sur la route actuelle
 const updateActiveItem = () => {
   navigationItems.value.forEach(item => {
     item.current = item.path === route.path
   })
 }
 
-// Mettre à jour l'élément actif au montage du composant
 updateActiveItem()
 
-// Surveiller les changements de route pour mettre à jour l'élément actif
 watch(() => route.path, () => {
   updateActiveItem()
 })
 </script>
 
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md py-4 px-6 flex justify-between items-center">
+  <nav 
+    data-testid="navigation" 
+    class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md py-4 px-6 flex justify-between items-center"
+  >
     <!-- Logo -->
-    <div class="flex items-center">
+    <div data-testid="logo" class="flex items-center">
       <div class="w-12 h-12 bg-gradient-to-r from-blue-900 to-purple-600 rounded-lg flex items-center justify-center">
         <span class="text-white font-bold text-xl">D</span>
       </div>
@@ -48,10 +47,11 @@ watch(() => route.path, () => {
     </div>
     
     <!-- Navigation Links -->
-    <div class="hidden md:flex space-x-8">
+    <div data-testid="nav-links" class="hidden md:flex space-x-8">
       <a 
         v-for="item in navigationItems" 
         :key="item.name"
+        :data-testid="`nav-item-${item.name.toLowerCase().replace(' ', '-')}`"
         @click="navigateTo(item.path)"
         :class="{
           'text-blue-600 font-semibold border-b-2 border-blue-600': item.current,
@@ -64,9 +64,10 @@ watch(() => route.path, () => {
     </div>
     
     <!-- Action Buttons -->
-    <div class="flex items-center space-x-4">
+    <div data-testid="action-buttons" class="flex items-center space-x-4">
       <LanguageSelector />
       <router-link 
+        data-testid="login-button"
         to="/SingnIn" 
         class="px-4 py-2 text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors duration-200"
       >
@@ -74,6 +75,7 @@ watch(() => route.path, () => {
       </router-link>
       
       <router-link 
+        data-testid="register-button"
         to="/signup" 
         class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors duration-200"
       >

@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest'
 import { mount } from '@vue/test-utils';
 import { createI18n } from 'vue-i18n';
-// import { createRouter, createMemoryHistory } from 'vue-router';
 import Herosection from '@/components/HeroSection.vue'
 
 // Configuration de i18n pour les tests
@@ -27,18 +26,10 @@ const i18n = createI18n({
   }
 });
 
-// Configuration minimale du router pour les tests
-// const router = createRouter({
-//   history: createMemoryHistory(),
-//   routes: [
-//     { path: '/signup', component: { template: '<div>Signup</div>' } }
-//   ]
-// });
-
 describe("HeroSection", () => {
     const wrapper = mount(Herosection, {
         global: {
-            plugins: [i18n] //, router]
+            plugins: [i18n] 
         }
     });
 

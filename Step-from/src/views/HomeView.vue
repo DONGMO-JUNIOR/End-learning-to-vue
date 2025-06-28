@@ -11,7 +11,7 @@ const scrollToSection = (sectionId: string) => {
   if (element) {
     element.scrollIntoView({ 
       behavior: 'smooth',
-      block: 'start' // Ajoutez ceci pour un alignement cohérent
+      block: 'start'
     })
   }
 }
@@ -19,25 +19,28 @@ const scrollToSection = (sectionId: string) => {
 
 <template>
   <div class="snap-container">
-    <!-- Hero Section -->
+    
     <section id="home" class="snap-section">
       <HeroSection @scroll-down="() => scrollToSection('about')" />
     </section>
 
-    <!-- About Section -->
+   
     <section id="about" class="snap-section">
       <AboutSection @scroll-down="() => scrollToSection('program')" />
     </section>
 
-    <!-- Program Section -->
+    
     <section id="program" class="snap-section">
       <ProgrammeScolaire @scroll-down="() => scrollToSection('contact')" />
     </section>
 
-    <!-- Contact Section -->
+   
     <section id="contact" class="snap-section">
       <ContactSection />
     </section>
+    <footer class="text-center text-sm text-gray-400 py-4">
+      © 2025 MaPlateforme. Tous droits réservés.
+    </footer>
   </div>
 </template>
 
@@ -46,32 +49,11 @@ const scrollToSection = (sectionId: string) => {
   scroll-snap-type: y mandatory;
   height: 100vh;
   overflow-y: scroll;
-   scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+   scrollbar-width: none; 
+  -ms-overflow-style: none; 
 }
 .snap-section {
   scroll-snap-align: start;
   height: 100vh;
 }
 </style>
-<!-- <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import NavBar from '@/components/NavBar.vue'
-import HeroSection from '@/components/HeroSection.vue'
-import AboutSection from '@/components/AboutSection.vue'
-
-const router = useRouter()
-
-const handleSignIn = (): void => {
-  router.push('/login')
-}
-
-const handleSignUp = (): void => {
-  router.push('/register')
-}
-
-const handleExplore = (): void => {
-  router.push('/programme')
-}
-</script> -->

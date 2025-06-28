@@ -1,265 +1,437 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import SelectInput from '../ui/SelectInput.vue' // Ajuste le chemin selon ton projet
+import SelectInput from '../forms/SelectInput.vue'
 
-const mockOptions = [
+vi.mock('vee-validate', () => ({
+  useField: vi.fn()
+}))
+
+import { useField } from 'vee-validate'
+
+const mockUseField = useField as ReturnType<typeof vi.fn>
+
+// Options de test par défaut
+const defaultOptions = [
   { value: 'option1', label: 'Option 1' },
   { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3', disabled: true },
-  { value: 'option4', label: 'Option 4' }
+  { value: 'option3', label: 'Option 3', disabled: true }
 ]
 
 describe('SelectInput', () => {
-  it('rend correctement avec les props de base', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-      }
-    })
-
-    const select = wrapper.find('select')
-    const label = wrapper.find('label')
-
-    expect(select.exists()).toBe(true)
-    expect(select.attributes('id')).toBe('test-select')
-    expect(label.text()).toBe('Test Label')
-    expect(label.attributes('for')).toBe('test-select')
-  })
-
-  it('affiche toutes les options', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-      }
-    })
-
-    const options = wrapper.findAll('option')
+  beforeEach(() => {
+    // Reset du mock avant chaque test
+    vi.clearAllMocks()
     
-    expect(options).toHaveLength(mockOptions.length)
-    
-    options.forEach((option, index) => {
-      expect(option.attributes('value')).toBe(mockOptions[index].value)
-      expect(option.text()).toBe(mockOptions[index].label)
+    // Mock par défaut pour tous les tests
+    mockUseField.mockReturnValue({
+      value: { value: '' },
+      errorMessage: { value: undefined },
+      handleBlur: vi.fn(),
+      handleChange: vi.fn(),
+      meta: { valid: false }
     })
   })
 
-  it('affiche la valeur sélectionnée', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: 'option2',
-        options: mockOptions
-      }
+  describe('Basic rendering', () => {
+    it('should render correctly', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test Label',
+          options: defaultOptions
+        }
+      })
+      expect(wrapper.exists()).toBe(true)
     })
 
-    const select = wrapper.find('select')
-    expect((select.element as HTMLSelectElement).value).toBe('option2')
+    it('should display the label', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'My Label',
+          options: defaultOptions
+        }
+      })
+      expect(wrapper.find('label').text()).toContain('My Label')
+    })
+
+    it('should display required asterisk when required is true', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          required: true,
+          options: defaultOptions
+        }
+      })
+      const asterisk = wrapper.find('span.text-red-500')
+      expect(asterisk.exists()).toBe(true)
+      expect(asterisk.text()).toBe('*')
+    })
+
+    it('should not display asterisk when required is false', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          required: false,
+          options: defaultOptions
+        }
+      })
+      expect(wrapper.find('span.text-red-500').exists()).toBe(false)
+    })
+
+    it('should render select element', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      expect(wrapper.find('select').exists()).toBe(true)
+    })
+
+    it('should display default placeholder', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      const placeholderOption = wrapper.find('option[value=""]')
+      expect(placeholderOption.exists()).toBe(true)
+      expect(placeholderOption.text()).toBe('Sélectionnez une option')
+    })
+
+    it('should display custom placeholder', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          placeholder: 'Choisissez votre option',
+          options: defaultOptions
+        }
+      })
+      const placeholderOption = wrapper.find('option[value=""]')
+      expect(placeholderOption.text()).toBe('Choisissez votre option')
+    })
   })
 
-  it('émet update:modelValue quand la sélection change', async () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-      }
+  describe('Options rendering', () => {
+    it('should render all options correctly', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      
+      const options = wrapper.findAll('option')
+      // +1 pour l'option placeholder
+      expect(options).toHaveLength(defaultOptions.length + 1)
+      
+      // Vérifier les labels des options (en excluant le placeholder)
+      const optionLabels = options.slice(1).map(option => option.text())
+      expect(optionLabels).toEqual(['Option 1', 'Option 2', 'Option 3'])
     })
 
-    const select = wrapper.find('select')
-    await select.setValue('option1')
+    it('should set correct values for options', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      
+      const options = wrapper.findAll('option')
+      // Vérifier les valeurs (en excluant le placeholder)
+      const optionValues = options.slice(1).map(option => option.attributes('value'))
+      expect(optionValues).toEqual(['option1', 'option2', 'option3'])
+    })
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['option1'])
+    it('should handle disabled options', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      
+      const disabledOption = wrapper.find('option[value="option3"]')
+      expect(disabledOption.attributes('disabled')).toBeDefined()
+    })
+
+    it('should handle enabled options', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      
+      const enabledOption = wrapper.find('option[value="option1"]')
+      expect(enabledOption.attributes('disabled')).toBeUndefined()
+    })
+
+    it('should render with empty options array', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: []
+        }
+      })
+      
+      const options = wrapper.findAll('option')
+      expect(options).toHaveLength(1) // Seulement l'option placeholder
+    })
   })
 
-  it('gère les options désactivées', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-      }
+  describe('Props testing', () => {
+    it('should apply required attribute when required is true', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          required: true,
+          options: defaultOptions
+        }
+      })
+      expect(wrapper.find('select').attributes('required')).toBeDefined()
     })
 
-    const options = wrapper.findAll('option')
-    const disabledOption = options[2] // option3 est désactivée
-    
-    expect(disabledOption.attributes('disabled')).toBeDefined()
+    it('should apply disabled attribute when disabled is true', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          disabled: true,
+          options: defaultOptions
+        }
+      })
+      expect(wrapper.find('select').attributes('disabled')).toBeDefined()
+    })
+
+    it('should set correct name and id attributes', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test-name',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      const select = wrapper.find('select')
+      expect(select.attributes('name')).toBe('test-name')
+      expect(select.attributes('id')).toBe('test-name')
+    })
+
+    it('should apply initial value through vee-validate', () => {
+      mockUseField.mockReturnValue({
+        value: { value: 'option2' },
+        errorMessage: { value: undefined },
+        handleBlur: vi.fn(),
+        handleChange: vi.fn(),
+        meta: { valid: false }
+      })
+
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          value: 'option2',
+          options: defaultOptions
+        }
+      })
+      
+      expect(mockUseField).toHaveBeenCalledWith(
+        expect.objectContaining({ value: 'test' }),
+        undefined,
+        { initialValue: 'option2' }
+      )
+    })
   })
 
-  it('affiche l\'astérisque rouge quand required est true', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions,
-        required: true
-      }
+  describe('CSS classes testing', () => {
+    it('should apply disabled classes when disabled is true', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          disabled: true,
+          options: defaultOptions
+        }
+      })
+      const select = wrapper.find('select')
+      expect(select.classes()).toContain('bg-gray-100')
+      expect(select.classes()).toContain('cursor-not-allowed')
     })
 
-    const requiredSpan = wrapper.find('span.text-red-500')
-    expect(requiredSpan.exists()).toBe(true)
-    expect(requiredSpan.text()).toBe('*')
+    it('should apply base classes by default', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      const select = wrapper.find('select')
+      expect(select.classes()).toContain('block')
+      expect(select.classes()).toContain('w-full')
+      expect(select.classes()).toContain('rounded-md')
+      expect(select.classes()).toContain('border-gray-300')
+    })
   })
 
-  it('n\'affiche pas l\'astérisque quand required est false', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions,
-        required: false
-      }
+  describe('Error state testing', () => {
+    it('should display error message when field has errors', () => {
+      mockUseField.mockReturnValue({
+        value: { value: 'test value' },
+        errorMessage: { value: 'This field is required' },
+        handleBlur: vi.fn(),
+        handleChange: vi.fn(),
+        meta: { valid: false }
+      })
+
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+      
+      const select = wrapper.find('select')
+      expect(select.classes()).toContain('border-red-300')
+      expect(select.classes()).toContain('text-red-900')
     })
 
-    const requiredSpan = wrapper.find('span.text-red-500')
-    expect(requiredSpan.exists()).toBe(false)
+    it('should apply error classes when there is an error message', () => {
+      mockUseField.mockReturnValue({
+        value: { value: '' },
+        errorMessage: { value: 'Invalid selection' },
+        handleBlur: vi.fn(),
+        handleChange: vi.fn(),
+        meta: { valid: false }
+      })
+
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+
+      const select = wrapper.find('select')
+      expect(select.classes()).toContain('border-red-300')
+      expect(select.classes()).toContain('focus:border-red-500')
+      expect(select.classes()).toContain('focus:ring-red-500')
+      expect(select.classes()).toContain('placeholder-red-300')
+    })
   })
 
-  it('applique l\'attribut required sur le select', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions,
-        required: true
-      }
-    })
 
-    const select = wrapper.find('select')
-    expect(select.attributes('required')).toBeDefined()
+  describe('Default state testing', () => {
+    it('should render with default vee-validate state', () => {
+      mockUseField.mockReturnValue({
+        value: { value: '' },
+        errorMessage: { value: undefined },
+        handleBlur: vi.fn(),
+        handleChange: vi.fn(),
+        meta: { valid: false }
+      })
+
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+
+      expect(wrapper.find('p.text-red-600').exists()).toBe(true)
+      expect(wrapper.find('p.text-green-600').exists()).toBe(false)
+      const select = wrapper.find('select')
+      expect(select.classes()).toContain('border-gray-300')
+    })
   })
 
-  it('n\'applique pas l\'attribut required quand required est false', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions,
-        required: false
-      }
+  describe('Accessibility testing', () => {
+    it('should have correct label association', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test-select',
+          label: 'Test Select',
+          options: defaultOptions
+        }
+      })
+
+      const label = wrapper.find('label')
+      const select = wrapper.find('select')
+      
+      expect(label.attributes('for')).toBe('test-select')
+      expect(select.attributes('id')).toBe('test-select')
     })
 
-    const select = wrapper.find('select')
-    expect(select.attributes('required')).toBeUndefined()
+    it('should have placeholder option disabled', () => {
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: defaultOptions
+        }
+      })
+
+      const placeholderOption = wrapper.find('option[value=""]')
+      expect(placeholderOption.attributes('disabled')).toBeDefined()
+    })
   })
 
-  it('applique les bonnes classes CSS', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-      }
+  describe('Edge cases', () => {
+    it('should handle options with special characters', () => {
+      const specialOptions = [
+        { value: 'special-1', label: 'Option with "quotes"' },
+        { value: 'special-2', label: "Option with 'apostrophe'" },
+        { value: 'special-3', label: 'Option with <tags>' }
+      ]
+
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: specialOptions
+        }
+      })
+
+      const options = wrapper.findAll('option')
+      expect(options[1].text()).toBe('Option with "quotes"')
+      expect(options[2].text()).toBe("Option with 'apostrophe'")
+      expect(options[3].text()).toBe('Option with <tags>')
     })
 
-    const container = wrapper.find('div')
-    const label = wrapper.find('label')
-    const select = wrapper.find('select')
+    it('should handle empty option labels', () => {
+      const emptyLabelOptions = [
+        { value: 'empty', label: '' },
+        { value: 'normal', label: 'Normal Option' }
+      ]
 
-    expect(container.classes()).toContain('mb-4')
-    
-    expect(label.classes()).toEqual(
-      expect.arrayContaining([
-        'block', 'text-sm', 'font-medium', 'text-gray-700', 'mb-1'
-      ])
-    )
-    
-    expect(select.classes()).toEqual(
-      expect.arrayContaining([
-        'block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300',
-        'rounded-md', 'shadow-sm', 'focus:outline-none', 'focus:ring-blue-500',
-        'focus:border-blue-500'
-      ])
-    )
-  })
+      const wrapper = mount(SelectInput, {
+        props: {
+          name: 'test',
+          label: 'Test',
+          options: emptyLabelOptions
+        }
+      })
 
-  it('fonctionne avec des options vides', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: []
-      }
+      const options = wrapper.findAll('option')
+      expect(options[1].text()).toBe('')
+      expect(options[2].text()).toBe('Normal Option')
     })
-
-    const options = wrapper.findAll('option')
-    expect(options).toHaveLength(0)
-  })
-
-  it('gère le changement via événement change', async () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-      }
-    })
-
-    const select = wrapper.find('select')
-    
-    // Simule un changement de valeur
-    ;(select.element as HTMLSelectElement).value = 'option2'
-    await select.trigger('change')
-
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['option2'])
-  })
-
-  it('utilise les valeurs par défaut des props', () => {
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: mockOptions
-        // required et placeholder utilisent les valeurs par défaut
-      }
-    })
-
-    const select = wrapper.find('select')
-    const requiredSpan = wrapper.find('span.text-red-500')
-
-    expect(select.attributes('required')).toBeUndefined() // required: false par défaut
-    expect(requiredSpan.exists()).toBe(false)
-  })
-
-  it('gère les options avec des caractères spéciaux', () => {
-    const specialOptions = [
-      { value: 'special1', label: 'Option avec & caractères spéciaux' },
-      { value: 'special2', label: 'Option avec <tags>' },
-      { value: 'special3', label: 'Option avec "guillemets"' }
-    ]
-
-    const wrapper = mount(SelectInput, {
-      props: {
-        id: 'test-select',
-        label: 'Test Label',
-        modelValue: '',
-        options: specialOptions
-      }
-    })
-
-    const options = wrapper.findAll('option')
-    
-    expect(options[0].text()).toBe('Option avec & caractères spéciaux')
-    expect(options[1].text()).toBe('Option avec <tags>')
-    expect(options[2].text()).toBe('Option avec "guillemets"')
   })
 })

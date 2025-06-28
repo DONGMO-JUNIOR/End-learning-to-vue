@@ -67,7 +67,6 @@ const programme = ref<Cours[]>([
   { id: 6, dayKey: 'saturday', subjectKey: 'english', professeur: 'Mr Smith', horaire: '09h00 - 11h00' },
 ]);
 
-// Computed properties pour les statistiques
 const uniqueProfessors = computed(() => {
   return new Set(programme.value.map(cours => cours.professeur)).size;
 });

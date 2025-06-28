@@ -157,7 +157,113 @@
       "required": "L'email est obligatoire",
       "invalid": "Format d'email invalide"
     }
+  },
+  "childForm": {
+    "title": "Étape 1 : Informations de l'enfant",
+    "submit": "Suivant ➡️",
+    "fields": {
+      "nom": {
+        "label": "Nom",
+        "placeholder": "Entrez le nom de l'enfant",
+        "errors": {
+          "required": "Le nom est requis",
+          "min": "Au moins 4 caractères"
+        }
+      },
+      "prenom": {
+        "label": "Prénom",
+        "placeholder": "Entrez le prénom de l'enfant", 
+        "errors": {
+          "required": "Le prénom est requis",
+          "min": "Au moins 4 caractères"
+        }
+      }
+    }
+  },
+
+  "parentForm": {
+    "title": "Étape 2 : Informations du Parent",
+    "buttons": {
+      "previous": "⬅️ Précédent",
+      "next": "Suivant ➡️"
+    },
+    "fields": {
+      "nom": {
+        "label": "Nom Parent",
+        "placeholder": "Entrez le nom du parent",
+        "errors": {
+          "required": "Le nom du parent est requis",
+          "min": "Au moins 2 caractères"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "exemple@email.com",
+        "errors": {
+          "required": "L'email est obligatoire",
+          "invalid": "Format d'email invalide"
+        }
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Créez un mot de passe",
+        "errors": {
+          "required": "Le mot de passe est requis",
+          "pattern": "Le mot de passe doit contenir au moins : une minuscule, une majuscule, un chiffre et un caractère spécial (@$!%*?&)"
+        }
+      },
+      "telephone": {
+        "label": "Téléphone",
+        "placeholder": "6XX XXX XXX",
+        "errors": {
+          "required": "Le téléphone est obligatoire",
+          "invalid": "Format invalide. Utilisez: 237XXXXXXXXX ou 6XXXXXXXX"
+        }
+      }
+    }
+  },
+  "childSpecsForm": {
+  "title": "Étape 3 : Spécifications de l'enfant",
+  "buttons": {
+    "previous": "⬅️ Précédent",
+    "submit": "Soumettre"
+  },
+  "fields": {
+    "classe": {
+      "label": "Classe",
+      "placeholder": "Sélectionnez une classe",
+      "errors": {
+        "required": "La classe est requise"
+      }
+    },
+    "serie": {
+      "label": "Série",
+      "placeholder": "Sélectionnez une série",
+      "errors": {
+        "required": "La série est requise"
+      }
+    }
+  },
+  "options": {
+    "classe": {
+      "6eme": "6ème",
+      "5eme": "5ème",
+      "4eme": "4ème", 
+      "3eme": "3ème",
+      "2e": "2e",
+      "1ere": "1ère",
+      "tle": "Tle"
+    },
+    "serie": {
+      "a": "Série A",
+      "b": "Série B",
+      "c": "Série C",
+      "d": "Série D",
+      "s": "Série S",
+      "ih": "Série IH"
+    }
   }
+}
 
 
 }

@@ -10,7 +10,7 @@ import fr from './locales/fr.json'
 // Fonction pour détecter la langue du navigateur
 function getBrowserLanguage() {
   const browserLang = navigator.language.substring(0, 2)
-  const supportedLanguages = ['en', 'fr', 'pl']
+  const supportedLanguages = ['en', 'fr']
   return supportedLanguages.includes(browserLang) ? browserLang : 'en'
 }
 
@@ -30,7 +30,7 @@ const i18n = createI18n({
     en,
     fr,
   },
-  legacy: false // Utilise la Composition API
+  legacy: false 
 })
 
 const app = createApp(App)
@@ -38,11 +38,3 @@ app.use(router)
 app.use(createPinia())
 app.use(i18n)
 app.mount('#app')
-// import { createApp } from 'vue'
-// import App from './App.vue'
-// import router from './router'
-
-// const app = createApp(App)
-
-// app.use(router)
-// app.mount('#app')

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import ProgressStep from '../ProgressBarre.vue'
+import ProgressStep from '../forms/MultiStepForm/ProgressBarre.vue'
 
 describe('ProgressStep', () => {
   const defaultProps = {
@@ -32,22 +32,18 @@ describe('ProgressStep', () => {
       props: defaultProps
     })
     
-    // Étape 1 - complétée (currentStep = 2)
     const step1 = wrapper.find('[data-testid="step-1"]')
     expect(step1.attributes('data-step-status')).toBe('completed')
     expect(step1.find('[data-testid="check-1"]').exists()).toBe(true)
     
-    // Étape 2 - courante
     const step2 = wrapper.find('[data-testid="step-2"]')
     expect(step2.attributes('data-step-status')).toBe('current')
     expect(step2.find('[data-testid="number-2"]').exists()).toBe(true)
     
-    // Étape 3 - en attente
     const step3 = wrapper.find('[data-testid="step-3"]')
     expect(step3.attributes('data-step-status')).toBe('pending')
     expect(step3.find('[data-testid="number-3"]').exists()).toBe(true)
     
-    // Étape 4 - en attente
     const step4 = wrapper.find('[data-testid="step-4"]')
     expect(step4.attributes('data-step-status')).toBe('pending')
     expect(step4.find('[data-testid="number-4"]').exists()).toBe(true)
@@ -61,7 +57,6 @@ describe('ProgressStep', () => {
     const progressBarFill = wrapper.find('[data-testid="progress-bar-fill"]')
     expect(progressBarFill.exists()).toBe(true)
     
-    // currentStep = 2, totalSteps = 4 => 50%
     expect(progressBarFill.attributes('style')).toContain('width: 50%')
   })
 
@@ -84,11 +79,8 @@ describe('ProgressStep', () => {
       props: defaultProps
     })
     
-    // Label de l'étape courante (2) doit être actif
     const currentLabel = wrapper.find('[data-testid="label-2"]')
     expect(currentLabel.attributes('data-label-status')).toBe('active')
-    
-    // Les autres labels doivent être inactifs
     const inactiveLabel = wrapper.find('[data-testid="label-1"]')
     expect(inactiveLabel.attributes('data-label-status')).toBe('inactive')
   })

@@ -73,8 +73,6 @@ import { ref,computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
-// Données utilisateur
 const parentName = ref('');
 const childName = ref('');
 const userEmail = ref('');
@@ -88,7 +86,7 @@ const clouds = ref([
   { duration: 20, delay: 0 },
   { duration: 25, delay: -10 }
 ]);
-// Nom à afficher (priorité au nom de l'enfant)
+
 const displayName = computed(() => {
   if (childName.value) {
     return childName.value;
@@ -99,10 +97,10 @@ const displayName = computed(() => {
   return 'Cher Utilisateur';
 });
 
-// Récupérer le prénom de l'utilisateur
+
 const fetchUserData = () => {
  try {
-    // 1. Depuis le localStorage
+    
     const userData = localStorage.getItem('user');
     console.log('Raw userData from localStorage:', userData);
     
@@ -113,11 +111,10 @@ const fetchUserData = () => {
       debugUserData.value = user;
       userDataFound.value = true;
       
-      // Récupérer le nom du parent
+      
       parentName.value = user.nom || user.name || user.firstName || '';
       console.log('Parent name found:', parentName.value);
       
-      // Récupérer le nom de l'enfant (priorité)
       if (user.enfant && user.enfant.nom) {
         childName.value = user.enfant.nom;
         console.log('Child name found:', childName.value);
@@ -126,13 +123,11 @@ const fetchUserData = () => {
         console.log('Child name found (alt):', childName.value);
       }
       
-      // Email pour debug
       userEmail.value = user.email || '';
       
       return;
     }
   
-   // 2. Depuis les paramètres URL (pour les démos)
     const urlParams = new URLSearchParams(window.location.search);
     const nameFromUrl = urlParams.get('name') || urlParams.get('prenom') || urlParams.get('enfant');
     if (nameFromUrl) {
@@ -147,7 +142,7 @@ const fetchUserData = () => {
     console.error('Erreur lors de la récupération des données utilisateur:', error);
   }
 };
-// Générer des étoiles aléatoires
+
 const generateStars = () => {
   const starCount = 20;
   const newStars = [];
@@ -164,7 +159,7 @@ const generateStars = () => {
   stars.value = newStars;
 };
 
-// Navigation
+
 const navigateToDashboard = () => {
   router.push('/not_found_page');
 };
@@ -173,7 +168,7 @@ const navigateToServices = () => {
   router.push('/not_found_page');
 };
 
-// Initialisation
+
 onMounted(() => {
   fetchUserData();
   generateStars();
@@ -181,7 +176,6 @@ onMounted(() => {
 </script>
 
 <style>
-/* Animations personnalisées */
 @keyframes twinkle {
   0% { opacity: 0.3; transform: scale(1); }
   100% { opacity: 1; transform: scale(1.2); }

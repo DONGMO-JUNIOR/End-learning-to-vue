@@ -1,73 +1,74 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import SubmitButton from '../ui/SubmitButton.vue'
+import SubmitButton from '../forms/SubmitButton.vue'
 
-describe('SubmitButton.vue', () => {
-  it('affiche le texte du bouton via la prop text', () => {
+describe('SubmitButton', () => {
+  it('should render the component', () => {
+    const wrapper = mount(SubmitButton)
+    expect(wrapper.find('[data-testid="submit-button-container"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="submit-button"]').exists()).toBe(true)
+  })
+
+  it('should display text via prop', () => {
     const wrapper = mount(SubmitButton, {
       props: {
         text: 'Envoyer'
       }
     })
     
-    expect(wrapper.text()).toContain('Envoyer')
+    const button = wrapper.find('[data-testid="submit-button"]')
+    expect(button.text()).toBe('Envoyer')
   })
 
-  it('affiche le contenu du slot si fourni', () => {
+  it('should display slot content when provided', () => {
     const wrapper = mount(SubmitButton, {
       slots: {
         default: 'Cliquez ici'
       }
     })
     
-    expect(wrapper.text()).toContain('Cliquez ici')
+    const button = wrapper.find('[data-testid="submit-button"]')
+    expect(button.text()).toBe('Cliquez ici')
   })
 
-  it('émet un événement click quand on clique', async () => {
+  it('should emit click event when clicked', async () => {
     const wrapper = mount(SubmitButton)
+    const button = wrapper.find('[data-testid="submit-button"]')
     
-    await wrapper.trigger('click')
+    await button.trigger('click')
+    
     expect(wrapper.emitted('click')).toBeTruthy()
     expect(wrapper.emitted('click')?.length).toBe(1)
   })
 
-  it('affiche l\'état désactivé quand disabled=true', () => {
+  it('should be disabled when disabled prop is true', () => {
     const wrapper = mount(SubmitButton, {
       props: {
         disabled: true
       }
     })
     
-    expect(wrapper.find('button').attributes('disabled')).toBeDefined()
-    expect(wrapper.find('button').classes()).toContain('opacity-50')
-    expect(wrapper.find('button').classes()).toContain('cursor-not-allowed')
+    const button = wrapper.find('[data-testid="submit-button"]')
+    expect(button.attributes('disabled')).toBeDefined()
+    expect(button.classes()).toContain('opacity-50')
+    expect(button.classes()).toContain('cursor-not-allowed')
   })
 
-  it('applique les classes personnalisées via customClass', () => {
-    const wrapper = mount(SubmitButton, {
-      props: {
-        customClass: 'bg-red-500 hover:bg-red-700 focus:ring-red-500'
-      }
-    })
-    
-    expect(wrapper.find('button').classes()).toContain('bg-red-500')
-    expect(wrapper.find('button').classes()).toContain('hover:bg-red-700')
-    expect(wrapper.find('button').classes()).toContain('focus:ring-red-500')
-  })
-
-  it('affiche le type par défaut (button)', () => {
+  it('should have default type button', () => {
     const wrapper = mount(SubmitButton)
+    const button = wrapper.find('[data-testid="submit-button"]')
     
-    expect(wrapper.find('button').attributes('type')).toBe('button')
+    expect(button.attributes('type')).toBe('button')
   })
 
-  it('accepte différents types via la prop type', () => {
+  it('should accept different types via type prop', () => {
     const wrapper = mount(SubmitButton, {
       props: {
         type: 'submit'
       }
     })
     
-    expect(wrapper.find('button').attributes('type')).toBe('submit')
+    const button = wrapper.find('[data-testid="submit-button"]')
+    expect(button.attributes('type')).toBe('submit')
   })
 })

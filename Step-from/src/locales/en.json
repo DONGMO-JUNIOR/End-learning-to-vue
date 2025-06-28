@@ -156,6 +156,112 @@
       "required": "Email is required",
       "invalid": "Invalid email format"
     }
+  },
+   "childForm": {
+    "title": "Step 1: Child Information",
+    "submit": "Next ➡️",
+    "fields": {
+      "nom": {
+        "label": "Last Name",
+        "placeholder": "Enter child's last name",
+        "errors": {
+          "required": "Last name is required",
+          "min": "At least 4 characters"
+        }
+      },
+      "prenom": {
+        "label": "First Name", 
+        "placeholder": "Enter child's first name",
+        "errors": {
+          "required": "First name is required",
+          "min": "At least 4 characters"
+        }
+      }
+    }
+  },
+
+  "parentForm": {
+    "title": "Step 2: Parent Information",
+    "buttons": {
+      "previous": "⬅️ Previous",
+      "next": "Next ➡️"
+    },
+    "fields": {
+      "nom": {
+        "label": "Parent Name",
+        "placeholder": "Enter parent's name",
+        "errors": {
+          "required": "Parent name is required",
+          "min": "At least 2 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "example@email.com",
+        "errors": {
+          "required": "Email is required",
+          "invalid": "Invalid email format"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Create a password",
+        "errors": {
+          "required": "Password is required",
+          "pattern": "Password must contain at least: one lowercase, one uppercase, one number and one special character (@$!%*?&)"
+        }
+      },
+      "telephone": {
+        "label": "Phone",
+        "placeholder": "6XX XXX XXX",
+        "errors": {
+          "required": "Phone is required",
+          "invalid": "Invalid format. Use: 237XXXXXXXXX or 6XXXXXXXX"
+        }
+      }
+    }
+  },
+  "childSpecsForm": {
+  "title": "Step 3: Child Specifications",
+  "buttons": {
+    "previous": "⬅️ Previous",
+    "submit": "Submit"
+  },
+  "fields": {
+    "classe": {
+      "label": "Grade",
+      "placeholder": "Select a grade",
+      "errors": {
+        "required": "Grade is required"
+      }
+    },
+    "serie": {
+      "label": "Track",
+      "placeholder": "Select a serie",
+      "errors": {
+        "required": "Track is required"
+      }
+    }
+  },
+  "options": {
+    "classe": {
+      "6eme": "form one",
+      "5eme": "form two", 
+      "4eme": "form three",
+      "3eme": "form four",
+      "2e": "form five",
+      "1ere": "lower sixth",
+      "tle": "oppa sixth"
+    },
+    "serie": {
+      "a": "serie A",
+      "b": "serie B",
+      "c": "serie C",
+      "d": "serie D",
+      "s": "serie S",
+      "ih": "serie IH"
+    }
   }
+}
 
 }

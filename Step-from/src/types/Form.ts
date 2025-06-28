@@ -22,8 +22,6 @@ export interface CompleteFormData {
   parentInfo: ParentInfo;
   childSpecs: ChildSpecifications;
 }
-
-// Interface pour les utilisateurs enregistrés
 export interface RegisteredUser {
   nom: string;
   email: string;
@@ -41,7 +39,6 @@ export interface RegisteredUser {
   id: number;
 }
 
-// Interface pour les données de session utilisateur
 export interface UserSession {
   nom: string;
   email: string;
