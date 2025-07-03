@@ -118,3 +118,4 @@ const {
     await expect(page.locator('[data-testid="progress-step-2"]')).toHaveClass(/active/);
     await expect(page.locator('[data-testid="progress-step-3"]')).not.toHaveClass(/active/);
   });
+  

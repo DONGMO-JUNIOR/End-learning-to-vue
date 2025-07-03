@@ -84,7 +84,7 @@
             :required="true"
           />
           
-          <TextInput
+          <PasswordInput
             data-testid="login-password-input"
             name="password"
             type="password"
@@ -92,6 +92,7 @@
             :placeholder="t('login.fields.password.placeholder')"
             :required="true"
           />
+           
         </div>
 
         <div class="flex items-center justify-between">
@@ -160,6 +161,7 @@ import { Form } from 'vee-validate'
 import * as yup from 'yup'
 import CheckboxInput from '@/components/forms/CheckboxInput.vue'
 import TextInput from '@/components/forms/BaseInput.vue'
+import PasswordInput from './forms/PasswordInput.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
@@ -167,7 +169,6 @@ const router = useRouter()
 const isLoading = ref(false)
 const errorMessage = ref('')
 const debug = ref(false)
-
 
 const schema = yup.object({
   email: yup
@@ -233,6 +234,4 @@ const handleSignIn = async (values: any, { resetForm }: any) => {
     isLoading.value = false
   }
 }
-
-const goToSignUp = () => router.push('/signup')
 </script>

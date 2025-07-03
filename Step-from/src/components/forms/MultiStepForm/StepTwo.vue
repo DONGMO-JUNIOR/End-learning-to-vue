@@ -29,7 +29,7 @@
         />
 
         <!-- Champ Mot de passe -->
-        <TextInput
+        <PasswordInput
         data-testid="parent-password"
           name="password"
           :label="t('parentForm.fields.password.label')"
@@ -75,6 +75,7 @@ import type { ParentInfo } from '@/types/Form';
 import TextInput from '../BaseInput.vue'
 import PhoneInput from '../PhoneInput.vue';
 import SubmitButton from '../SubmitButton.vue';
+import PasswordInput from '../PasswordInput.vue';
 
 const { t } = useI18n()
 

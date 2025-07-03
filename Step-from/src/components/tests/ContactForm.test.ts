@@ -60,7 +60,7 @@ const i18n = createI18n({
 })
 
 describe('ContactForm.vue', () => {
-  let wrapper: VueWrapper<any>
+  let wrapper: VueWrapper
 
   beforeEach(() => {
     wrapper = mount(ContactForm, {
